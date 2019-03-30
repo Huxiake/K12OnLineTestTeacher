@@ -10,11 +10,11 @@
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
         <router-link class="inlineBlock" to="/">
           <el-dropdown-item>
-            Home
+            主页
           </el-dropdown-item>
         </router-link>
         <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
+          <span style="display:block;" @click="logout">退出</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -52,8 +52,12 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
+  position: fixed;
+  width: 100%;
   height: 50px;
   line-height: 50px;
+  background-color: #FFFFFF;
+  z-index: 1001;
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.12), 0 0 3px 0 rgba(0,0,0,.04);
   .hamburger-container {
     line-height: 58px;

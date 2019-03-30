@@ -17,7 +17,7 @@
         v-for="child in item.children"
         :is-nest="true"
         :item="child"
-        :key="child.path"
+        :key="child.name"
         :base-path="resolvePath(child.path)"
         class="nest-menu" />
     </el-submenu>

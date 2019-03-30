@@ -31,7 +31,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/dashboard',
     name: 'Dashboard',
-    hidden: true,
+    meta: { title: '主页', icon: 'form' },
     children: [{
       path: 'dashboard',
       component: () => import('@/views/dashboard/index')
@@ -39,107 +39,126 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/example',
+    path: '/class',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    name: 'class',
+    meta: { title: '班级管理', icon: 'form' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
+        path: '/class',
+        name: 'classadmin',
+        component: () => import('@/views/class/student'),
         children: [
           {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
+            path: 'student',
+            name: 'student',
+            meta: { title: '学生管理', icon: 'form' }
           }
         ]
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        path: '/class',
+        name: 'classlist',
+        component: () => import('@/views/class/classList'),
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            meta: { title: '班级列表', icon: 'form' }
+          }
+        ]
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '/subject',
     component: Layout,
+    name: 'subject',
+    meta: { title: '试卷管理', icon: 'form' },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: '/subject',
+        name: 'subjectadmin',
+        // component: () => import('@/vies/...'),
+        children: [
+          {
+            path: 'question',
+            name: 'question',
+            // component: () => import(''),
+            meta: { title: '题库管理', icon: 'form' }
+          }
+        ]
+      },
+      {
+        path: '/subject',
+        name: 'subjectlist',
+        // component: () => import('@/vies/...'),
+        children: [
+          {
+            path: 'list',
+            name: 'list1',
+            // component: () => import(''),
+            meta: { title: '试卷列表', icon: 'form' }
+          }
+        ]
       }
     ]
+  },
+
+  {
+    path: '/test',
+    component: Layout,
+    name: 'test',
+    meta: { title: '考试管理', icon: 'form' },
+    children: [
+      {
+        path: '/test',
+        name: 'testadmin',
+        // component: () => import('@/vies/...'),
+        children: [
+          {
+            path: 'release',
+            name: 'release',
+            // component: () => import(''),
+            meta: { title: '考试安排', icon: 'form' }
+          }
+        ]
+      },
+      {
+        path: '/test',
+        name: 'tastlist',
+        // component: () => import('@/vies/...'),
+        children: [
+          {
+            path: 'list',
+            name: 'list2',
+            // component: () => import(''),
+            meta: { title: '考试列表', icon: 'form' }
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    path: '/score',
+    component: Layout,
+    name: 'score',
+    meta: { title: '成绩分析', icon: 'form' },
+    children: [{
+      path: '/score',
+      name: 'gradeanalysis',
+      // component: () => import('@/vies/...'),
+      children: [
+        {
+          path: 'index',
+          name: 'analysis',
+          // component: () => import(''),
+          meta: { title: '成绩分析表', icon: 'form' }
+        }
+      ]
+    }]
   },
 
   { path: '*', redirect: '/404', hidden: true }

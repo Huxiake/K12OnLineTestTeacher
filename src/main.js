@@ -4,6 +4,7 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// import 'element-ui/lib/element-#44AA99/index.css'
 import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 
 import '@/styles/index.scss' // global css
@@ -13,7 +14,7 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-import '@/permission' // permission control
+// import '@/permission' // permission control
 
 /**
  * This project originally used easy-mock to simulate data,
@@ -23,7 +24,7 @@ import '@/permission' // permission control
  * it will intercept your request, so you won't see the request in the network.
  * If you remove `../mock` it will automatically request easy-mock data.
  */
-import '../mock' // simulation data
+// import '../mock' // simulation data
 
 Vue.use(ElementUI, { locale })
 

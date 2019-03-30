@@ -25,7 +25,7 @@
       </el-form-item>
       <el-form-item>
         <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-          Sign in
+          登录
         </el-button>
       </el-form-item>
       <div class="tips">
@@ -50,7 +50,7 @@ export default {
       }
     }
     const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
+      if (value.length < 0) {
         callback(new Error('密码不能小于5位'))
       } else {
         callback()
