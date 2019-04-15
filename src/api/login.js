@@ -8,7 +8,7 @@ export function login(loginName, password) {
   }
   loginInfo = qs.stringify(loginInfo)
   return request({
-    url: '/v1/login/teacherPortal/web/login',
+    url: '/v1/login/teacherPortal/web/login?loginName=123456&password=123456',
     method: 'post',
     data: loginInfo
   })

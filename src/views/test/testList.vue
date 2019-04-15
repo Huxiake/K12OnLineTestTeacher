@@ -2,18 +2,18 @@
   <div class="card-container">
     <el-card class="table-card">
       <div slot="header" class="clearfix">
-        <span>试卷管理</span>
+        <span>场次列表</span>
       </div>
       <div class="text item">
         <el-row :gutter="16" type="flex" justify="right">
           <el-col :span="16">
-            <el-button type="primary" size="mini" @click="handleNewPaper">新建试卷</el-button>
+            <el-button type="primary" size="mini" @click="handlenewExam">新建场次</el-button>
           </el-col>
           <el-col :span="3">
-            <el-input v-model="paper.name" placeholder="请输入试卷名"/>
+            <el-input v-model="exam.name" placeholder="请输入试卷名"/>
           </el-col>
           <el-col :span="3">
-            <el-select v-model="paper.status" placeholder="请选择">
+            <el-select v-model="exam.status" placeholder="请选择">
               <el-option
                 label="全部"
                 value=""/>
@@ -26,7 +26,7 @@
             </el-select>
           </el-col>
           <el-col :span="2">
-            <el-button type="primary" @click="handleGetPaper">查询</el-button>
+            <el-button type="primary" @click="handleGetExam">查询</el-button>
           </el-col>
         </el-row>
         <el-row :gutter="16">
@@ -37,18 +37,38 @@
             <el-table-column
               width="200"
               prop="name"
-              label="试卷名"
+              label="场次名称"
               align="center"
             />
             <el-table-column
-              prop="description"
+              prop="remark"
               align="center"
               label="描述"
             />
             <el-table-column
-              label="状态"
-              width="220"
+              prop="remark"
               align="center"
+              label="考试班级"
+            />
+            <el-table-column
+              prop="remark"
+              align="center"
+              label="考试人数"
+              width="100"
+            />
+            <el-table-column
+              label="考试时间"
+              width="300"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <svg-icon icon-class="date"/>
+                <el-tag v-if="scope.row.status === 'disabled'" type="danger">禁用</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="场次状态"
+              width="100"
             >
               <template slot-scope="scope">
                 <el-tag v-if="scope.row.status === 'enabled'" type="success">正常</el-tag>
@@ -61,9 +81,9 @@
               align="center"
             >
               <template slot-scope="scope">
-                <!-- <el-button
+                <el-button
                   size="mini"
-                  @click="handleEdit(scope.$index, scope.row)">详情</el-button> -->
+                  @click="handleEdit(scope.row.id)">编辑</el-button>
                 <el-button
                   size="mini"
                   type="danger"
@@ -74,18 +94,33 @@
         </el-row>
       </div>
       <!-- 新建试卷dialog层 -->
-      <el-dialog :visible.sync="dialogFormVisible" title="新建试卷">
-        <el-form :model="newPaper">
+      <el-dialog :visible.sync="dialogAddVisible" title="新建试卷">
+        <el-form :model="newExam">
           <el-form-item label="试卷名">
-            <el-input v-model="newPaper.name" autocomplete="off"/>
+            <el-input v-model="newExam.name"/>
           </el-form-item>
           <el-form-item label="试卷描述">
-            <el-input v-model="newPaper.description" autocomplete="off"/>
+            <el-input v-model="newExam.description"/>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="handlePutNewPaper">确 定</el-button>
+          <el-button @click="dialogAddVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handlePutAddExam">确 定</el-button>
+        </div>
+      </el-dialog>
+      <!-- 编辑试卷dialog层 -->
+      <el-dialog :visible.sync="dialogEditVisible" title="新建试卷">
+        <el-form :model="newExam">
+          <el-form-item label="试卷名">
+            <el-input v-model="newExam.name"/>
+          </el-form-item>
+          <el-form-item label="试卷描述">
+            <el-input v-model="newExam.description"/>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogEditVisible = false">取 消</el-button>
+          <el-button type="primary" @click="handlePutEditExam">确 定</el-button>
         </div>
       </el-dialog>
     </el-card>
@@ -93,22 +128,23 @@
 </template>
 
 <script>
-import { getPaperList, deletePaper, newPaper } from '@/api/table'
+import { getExamList, deleteExam, addExam, editExam } from '@/api/table'
 
 export default {
   data() {
     return {
-      dialogFormVisible: false,
+      dialogAddVisible: false,
+      dialogEditVisible: false,
       table: {
         tableData: []
       },
-      paper: {
+      exam: {
         name: '',
         pageNum: '0',
         pageSize: '100',
         status: ''
       },
-      newPaper: {
+      newExam: {
         name: '',
         subjectId: '1',
         description: ''
@@ -116,36 +152,51 @@ export default {
     }
   },
   created() {
-    this.handleGetPaper()
+    this.handleGetExam()
   },
   methods: {
-    handleGetPaper() {
-      getPaperList(this.paper).then(res => {
+    handleGetExam() {
+      getExamList().then(res => {
         if (res.data.errorMsg === '操作成功') {
           this.table.tableData = res.data.data.rows
         }
       })
     },
-    handleNewPaper() {
-      this.newPaper.name = ''
-      this.dialogFormVisible = true
+    handlenewExam() {
+      this.newExam.name = ''
+      this.dialogAddVisible = true
     },
-    handlePutNewPaper() {
-      newPaper(this.newPaper).then(res => {
+    handlePutAddExam() {
+      addExam(this.newExam).then(res => {
         if (res.data.code === 0) {
           this.$message({
             type: 'success',
             message: '新建成功!'
           })
-          this.dialogFormVisible = false
-          this.handleGetPaper()
+          this.dialogAddVisible = false
+          this.handleGetExam()
+        }
+      })
+    },
+    handleEdit() {
+      this.dialogEditVisible = true
+    },
+    handlePutEditExam() {
+      editExam(this.newExam).then(res => {
+        if (res.data.code === 0) {
+          this.$message({
+            type: 'success',
+            message: '编辑成功!'
+          })
+          this.dialogEditVisible = false
+          this.handleGetExam()
         }
       })
     },
     handleRow(row, column, event) {
       if (column.target.innerText !== '删除') {
         this.$router.push({
-          name: 'paperdetails',
+          name: 'examdetails',
           params: { id: row.id }
         })
       }
@@ -156,13 +207,13 @@ export default {
         cancelButtonText: '取消',
         type: 'error'
       }).then(() => {
-        deletePaper(id).then(res => {
+        deleteExam(id).then(res => {
           if (res.data.code === 0) {
             this.$message({
               type: 'success',
               message: '删除成功!'
             })
-            this.handleGetPaper()
+            this.handleGetExam()
           }
         })
       })

@@ -14,7 +14,7 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-// import '@/permission' // permission control
+import '@/permission' // permission control
 
 /**
  * This project originally used easy-mock to simulate data,

@@ -5,11 +5,14 @@
         <span>学生管理</span>
       </div>
       <div class="text item">
-        <el-row :gutter="16">
-          <el-col :span="6">
+        <el-row :gutter="16" type="flex" justify="right">
+          <el-col :span="19">
+            <!-- <el-button type="primary">新增学生</el-button> -->
+          </el-col>
+          <el-col :span="3">
             <el-input/>
           </el-col>
-          <el-col :span="6">
+          <el-col :span="2">
             <el-button type="primary">查询</el-button>
           </el-col>
         </el-row>
@@ -21,13 +24,16 @@
               width="100"
               prop="name"
               label="姓名"
+              align="center"
             />
             <el-table-column
               prop="number"
+              align="center"
               label="学号"
             />
             <el-table-column
               width="100"
+              align="center"
               label="性别"
             >
               <template slot-scope="scope">
@@ -38,13 +44,16 @@
             </el-table-column>
             <el-table-column
               prop="birthday"
+              align="center"
               label="生日"
             />
             <el-table-column
               prop="loginPhone"
+              align="center"
               label="电话"
             />
             <el-table-column
+              align="center"
               label="操作"
             >
               <template slot-scope="scope">

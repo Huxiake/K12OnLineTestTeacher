@@ -40,7 +40,7 @@ const user = {
     },
 
     // 登出
-    LogOut({ commit, state }) {
+    FedLogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
@@ -54,7 +54,7 @@ const user = {
     },
 
     // 前端 登出
-    FedLogOut({ commit }) {
+    LogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()

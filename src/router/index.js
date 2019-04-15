@@ -55,19 +55,19 @@ export const constantRouterMap = [
             meta: { title: '学生管理', icon: 'form' }
           }
         ]
-      },
-      {
-        path: '/class',
-        name: 'classlist',
-        component: () => import('@/views/class/classList'),
-        children: [
-          {
-            path: 'list',
-            name: 'list',
-            meta: { title: '班级列表', icon: 'form' }
-          }
-        ]
       }
+      // {
+      //   path: '/class',
+      //   name: 'classlist',
+      //   component: () => import('@/views/class/classList'),
+      //   children: [
+      //     {
+      //       path: 'list',
+      //       name: 'list',
+      //       meta: { title: '班级列表', icon: 'form' }
+      //     }
+      //   ]
+      // }
     ]
   },
 
@@ -77,29 +77,68 @@ export const constantRouterMap = [
     name: 'subject',
     meta: { title: '试卷管理', icon: 'form' },
     children: [
+      // {
+      //   path: '/subject',
+      //   name: 'subjectadmin',
+      //   // component: () => import('@/vies/...'),
+      //   children: [
+      //     {
+      //       path: 'question',
+      //       name: 'question',
+      //       // component: () => import(''),
+      //       meta: { title: '题库管理', icon: 'form' }
+      //     }
+      //   ]
+      // },
       {
         path: '/subject',
-        name: 'subjectadmin',
+        name: 'subjectlist',
         // component: () => import('@/vies/...'),
+        component: () => import('@/views/subject/paper'),
         children: [
           {
-            path: 'question',
-            name: 'question',
-            // component: () => import(''),
-            meta: { title: '题库管理', icon: 'form' }
+            path: 'list',
+            name: 'list1',
+            meta: { title: '试卷列表', icon: 'form' }
           }
         ]
       },
       {
         path: '/subject',
-        name: 'subjectlist',
-        // component: () => import('@/vies/...'),
+        name: 'subjectdetails',
+        hidden: true,
+        component: () => import('@/views/subject/details'),
         children: [
           {
-            path: 'list',
-            name: 'list1',
-            // component: () => import(''),
-            meta: { title: '试卷列表', icon: 'form' }
+            path: 'details/:id',
+            name: 'paperdetails',
+            meta: { title: '试卷详情', icon: 'form' }
+          }
+        ]
+      },
+      {
+        path: '/subject/question',
+        name: 'questionedit',
+        hidden: true,
+        component: () => import('@/views/subject/question/edit'),
+        children: [
+          {
+            path: 'edit/:id',
+            name: 'editquestion',
+            meta: { title: '修改题目', icon: 'form' }
+          }
+        ]
+      },
+      {
+        path: '/subject/question',
+        name: 'questionadd',
+        hidden: true,
+        component: () => import('@/views/subject/question/add'),
+        children: [
+          {
+            path: ':paperId/add',
+            name: 'addquestion',
+            meta: { title: '新增题目', icon: 'form' }
           }
         ]
       }
@@ -113,27 +152,25 @@ export const constantRouterMap = [
     meta: { title: '考试管理', icon: 'form' },
     children: [
       {
-        path: '/test',
+        path: '/test/release',
         name: 'testadmin',
-        // component: () => import('@/vies/...'),
+        component: () => import('@/views/test/testDashboard'),
         children: [
           {
-            path: 'release',
-            name: 'release',
-            // component: () => import(''),
-            meta: { title: '考试安排', icon: 'form' }
+            path: 'dashboard',
+            name: 'testdashboard',
+            meta: { title: '考试看板', icon: 'form' }
           }
         ]
       },
       {
-        path: '/test',
+        path: '/test/list',
         name: 'tastlist',
-        // component: () => import('@/vies/...'),
+        component: () => import('@/views/test/testList'),
         children: [
           {
-            path: 'list',
+            path: 'all',
             name: 'list2',
-            // component: () => import(''),
             meta: { title: '考试列表', icon: 'form' }
           }
         ]
