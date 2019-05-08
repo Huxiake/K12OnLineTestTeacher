@@ -25,7 +25,7 @@
             <a v-if="index === questionOption.length - 1" style="color: #72ACE3;margin-left: 10px;" @click="deleteOption">删除选项</a>
           </el-form-item>
           <el-form-item label="答案">
-            <el-select v-model="questionNewData.selectyAnswer">
+            <el-select v-model="questionData.answer">
               <el-option v-for="(item, index) in questionOption" :key="index" :label="item" :value="item[0]"/>
             </el-select>
           </el-form-item>
@@ -52,7 +52,8 @@ export default {
       questionOption: [],
       questionData: {},
       questionNewData: {
-        selectyAnswer: '',
+        answer: '',
+        judgeAnswer: '',
         grade: '',
         type: '',
         content: '',
@@ -72,6 +73,7 @@ export default {
         console.log(res)
         if (res.data.code === 0) {
           this.questionData = res.data.data
+          console.log(this.questionData)
           var content_temp = res.data.data.content
           var option_temp = res.data.data.content
           content_temp = content_temp.match(/#(\S*)#/)[1]
@@ -94,7 +96,8 @@ export default {
         content_temp = content_temp + '##' + this.questionOption[i] + '## '
       }
       this.questionNewData.id = this.questionData.id
-      this.questionNewData.selectyAnswer = this.questionData.selectyAnswer
+      this.questionNewData.answer = this.questionData.answer
+      this.questionNewData.judgeAnswer = this.questionData.judgeAnswer
       this.questionNewData.grade = this.questionData.grade
       this.questionNewData.type = this.questionData.type
       this.questionNewData.examPaperId = this.questionData.examPaperId

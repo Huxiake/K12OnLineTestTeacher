@@ -25,7 +25,7 @@
             <a v-if="(index === questionOption.length - 1) && questionOption.length !== 1" style="color: #72ACE3" @click="deleteOption">删除一个选项</a>
           </el-form-item>
           <el-form-item label="答案">
-            <el-select v-model="questionNewData.selectyAnswer">
+            <el-select v-model="questionNewData.answer">
               <el-option v-for="(item, index) in questionOption" :key="index" :label="item" :value="item[0]"/>
             </el-select>
           </el-form-item>
@@ -50,7 +50,8 @@ export default {
     return {
       questionOption: ['', ''],
       questionNewData: {
-        selectyAnswer: '',
+        answer: '',
+        judgeAnswer: '',
         grade: '',
         type: '',
         content: '',

@@ -1,19 +1,20 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name:{{ name }}</div>
-    <div class="dashboard-text">roles:<span v-for="role in roles" :key="role">{{ role }}</span></div>
     <grade-analysis :chart-data="newVisitis"/>
+    <bin-tu :chart-data="newVisitis"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
 import GradeAnalysis from './chart/GradeAnalysis'
+import BinTu from './chart/BinTu'
 
 export default {
   name: 'Dashboard',
   components: {
-    GradeAnalysis
+    GradeAnalysis,
+    BinTu
   },
   data() {
     return {

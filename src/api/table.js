@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 import qs from 'qs'
 
-export function getList(params) {
+// 获取教师所在班级
+export function getClassList() {
   return request({
-    url: '/table/list',
-    method: 'get',
-    params
+    url: '/v1/teacher/schoolClass/listByTeacher',
+    method: 'get'
   })
 }
 
@@ -22,15 +22,15 @@ export function getStudentList(classId) {
 }
 
 // 获取试卷列表
-export function getPaperList(student) {
-  const data = qs.stringify(student)
+export function getPaperList(condition) {
+  const data = qs.stringify(condition)
   return request({
     url: '/v1/teacher/examPapers?' + data,
     method: 'get'
   })
 }
 
-// 新娟试卷
+// 新建试卷
 export function newPaper(paper) {
   const data = qs.stringify(paper)
   return request({

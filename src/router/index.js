@@ -186,12 +186,11 @@ export const constantRouterMap = [
     children: [{
       path: '/score',
       name: 'gradeanalysis',
-      // component: () => import('@/vies/...'),
+      component: () => import('@/views/score'),
       children: [
         {
           path: 'index',
           name: 'analysis',
-          // component: () => import(''),
           meta: { title: '成绩分析表', icon: 'form' }
         }
       ]

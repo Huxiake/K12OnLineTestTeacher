@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/v1': {
-        target: 'http://47.107.66.134:80/exam-online', // 楷东环境
+        target: 'http://www.chaoyangedu.cn/exam-online', // 楷东环境
         // target: 'http://39.108.105.43:8081', // 霞客环境
         changeOrigin: true,
         pathRewrite: {

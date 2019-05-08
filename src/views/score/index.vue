@@ -6,22 +6,32 @@
       </div>
       <div class="text item">
         <el-row :gutter="16" type="flex" justify="right">
-          <el-col :span="16">
+          <el-col :span="10">
             <el-button type="primary" size="mini" @click="handlenewExam">新建场次</el-button>
           </el-col>
-          <el-col :span="3">
-            <el-input v-model="exam.name" placeholder="请输入试卷名"/>
+          <el-col :span="4">
+            <el-input v-model="exam.name" placeholder="请输入姓名"/>
           </el-col>
-          <el-col :span="3">
-            <el-select v-model="exam.status" placeholder="请选择">
+          <el-col :span="4">
+            <el-select v-model="exam.status" placeholder="请选择班级">
               <el-option
-                label="全部"
-                value=""/>
-              <el-option
-                label="正常"
+                label="601班"
                 value="enabled"/>
               <el-option
-                label="禁用"
+                label="602班"
+                value="disabled"/>
+            </el-select>
+          </el-col>
+          <el-col :span="4">
+            <el-select v-model="exam.status" placeholder="请选择场次">
+              <el-option
+                label="全部"
+                value="enabled"/>
+              <el-option
+                label="第一月考"
+                value="enabled1"/>
+              <el-option
+                label="期中"
                 value="disabled"/>
             </el-select>
           </el-col>
@@ -31,72 +41,35 @@
         </el-row>
         <el-row :gutter="16">
           <el-table
-            :data="table.tableData"
-            @row-click="handleRow"
+            :data="gradeData"
           >
             <el-table-column
-              width="200"
-              prop="name"
-              label="场次名称"
+              prop="姓名"
               align="center"
+              label="姓名"
             />
             <el-table-column
-              prop="remark"
+              prop="场次"
               align="center"
-              label="描述"
+              label="场次"
             />
             <el-table-column
-              prop="remark"
+              prop="分数"
               align="center"
-              label="考试班级"
+              label="分数"
             />
             <el-table-column
-              prop="totalPeople"
+              prop="排名"
               align="center"
-              label="考试人数"
-              width="100"
+              label="排名"
             />
-            <el-table-column
-              label="考试时间"
-              width="300"
-              align="center"
-            >
-              <template slot-scope="scope">
-                <svg-icon icon-class="date"/>
-                <span>{{ $moment(scope.row.beginTime).format('YYYY-MM-DD') }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="场次状态"
-              width="100"
-            >
-              <template slot-scope="scope">
-                <el-tag v-if="scope.row.status === 'enabled'" type="success">正常</el-tag>
-                <el-tag v-if="scope.row.status === 'disabled'" type="danger">禁用</el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="操作"
-              width="220"
-              align="center"
-            >
-              <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  @click="handleEdit(scope.row.id)">编辑</el-button>
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="handleDelete(scope.row.id)">删除</el-button>
-              </template>
-            </el-table-column>
           </el-table>
         </el-row>
       </div>
       <!-- 新建试卷dialog层 -->
       <el-dialog :visible.sync="dialogAddVisible" title="新建场次">
         <el-form :model="newExam">
-          <el-form-item label="场次名">
+          <el-form-item label="姓名">
             <el-input v-model="newExam.name"/>
           </el-form-item>
           <el-form-item label="考试开始时间">
@@ -154,6 +127,80 @@ import { getPaperList, getExamList, deleteExam, addExam, editExam } from '@/api/
 export default {
   data() {
     return {
+      gradeData: [
+        {
+          姓名: '胡霞客',
+          场次: '第一月考',
+          排名: '2',
+          分数: '119'
+        },
+        {
+          姓名: '胡小鹏',
+          场次: '第一月考',
+          排名: '1',
+          分数: '128'
+        },
+        {
+          姓名: '黄滢滢',
+          场次: '第一月考',
+          排名: '3',
+          分数: '85'
+        },
+        {
+          姓名: '黄大非',
+          场次: '第一月考',
+          排名: '4',
+          分数: '80'
+        },
+        {
+          姓名: '刘五',
+          场次: '第一月考',
+          排名: '5',
+          分数: '70'
+        },
+        {
+          姓名: '赵四',
+          场次: '第一月考',
+          排名: '6',
+          分数: '81'
+        },
+        {
+          姓名: '胡霞客',
+          场次: '期中',
+          排名: '2',
+          分数: '106'
+        },
+        {
+          姓名: '黄滢滢',
+          场次: '期中',
+          排名: '1',
+          分数: '130'
+        },
+        {
+          姓名: '胡小鹏',
+          场次: '期中',
+          排名: '5',
+          分数: '66'
+        },
+        {
+          姓名: '黄大非',
+          场次: '期中',
+          排名: '4',
+          分数: '70'
+        },
+        {
+          姓名: '刘五',
+          场次: '期中',
+          排名: '3',
+          分数: '82'
+        },
+        {
+          姓名: '赵四',
+          场次: '期中',
+          排名: '4',
+          分数: '70'
+        }
+      ],
       dialogAddVisible: false,
       dialogEditVisible: false,
       table: {
